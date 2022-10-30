@@ -18,9 +18,15 @@ public class ClansCreateSubCommand extends SubCommand {
         ClanManager clanManager = api.getManager(ClanManager.class);
         LangManager langManager = api.getManager(LangManager.class);
         if(clanManager.getClan(args[0]) != null){
-            player.sendMessage(langManager.getLanguage().getString("clan-already-exists"));
+            player.sendMessage(langManager.getLanguage().getString("clan-already-exists").replace("{name}", args[0]));
             return false;
         }
+        if(clanManager.getClan(player.getUniqueId()) != null){
+            player.sendMessage(langManager.getLanguage().getString("already-in-a-clan").replace("{clan}", args[0]));
+            return false;
+        }
+        Clan clan = clanManager.addClan(args[0], player.getUniqueId());
+        player.sendMessage(langManager.getLanguage().getString("clan-created").replace("{clan}", clan.getName()));
         return false;
     }
 }

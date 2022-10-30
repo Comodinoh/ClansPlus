@@ -76,8 +76,13 @@ public class LoggerUtils {
                     c2 = 'c';
                     break;
                 case DEBUG:
+                    if(!plugin.getConfig().getBoolean("debug")){
+                        appended.forEach(LogResult::send);
+                        return this;
+                    }
                     c1 = 'f';
                     c2 = '8';
+                    break;
             }
             plugin.getServer().getConsoleSender().sendMessage(Color.color("&" + c1 + PREFIX + "&" +  c2 + msg));
             appended.forEach(LogResult::send);

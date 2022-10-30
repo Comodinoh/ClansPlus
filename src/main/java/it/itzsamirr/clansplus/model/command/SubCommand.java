@@ -6,6 +6,9 @@ import lombok.Getter;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.util.Collections;
+import java.util.List;
+
 public abstract class SubCommand {
     protected final ClansAPI api;
     protected final ClansPlus plugin;
@@ -37,5 +40,9 @@ public abstract class SubCommand {
 
     public boolean run(Player player, String[] args){
         return false;
+    }
+
+    public List<String> tabComplete(CommandSender sender, String[] args){
+        return Collections.emptyList();
     }
 }

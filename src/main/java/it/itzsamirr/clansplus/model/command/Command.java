@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public abstract class Command implements TabExecutor {
     @Getter private String name;
@@ -69,16 +70,17 @@ public abstract class Command implements TabExecutor {
                 if (!subCommand.getPermission().isEmpty() && !sender.hasPermission(subCommand.getPermission())){
                     break a1;
                 }
+                final String[] subArgs = Arrays.copyOfRange(args, 1, args.length);
                 if(subCommand.isOnlyPlayers()){
                     if(!(sender instanceof Player)){
                         sender.sendMessage(ClansAPI.getInstance().getManager(LangManager.class)
                                 .getLanguage().getString("only-players"));
                         return false;
                     }
-                    if(subCommand.run((Player)sender, args)) break a1;
+                    if(subCommand.run((Player)sender, subArgs)) break a1;
                     return false;
                 }
-                if(subCommand.run(sender, args)) break a1;
+                if(subCommand.run(sender, subArgs)) break a1;
                 return false;
             }
         }
@@ -99,22 +101,25 @@ public abstract class Command implements TabExecutor {
         return null;
     }
 
-    public List<String> tabComplete(Player player, String[] args){
-        return null;
-    }
-
     @Override
     public List<String> onTabComplete(CommandSender sender, org.bukkit.command.Command command, String alias, String[] args) {
         if(!permission.isEmpty()){
             if(!sender.hasPermission(permission)){
-                return Collections.emptyList();
-            }
-        }
-        if(onlyPlayers){
-            if(!(sender instanceof Player)){
                 return null;
             }
-            return tabComplete((Player)sender, args);
+        }
+        if(!subCommands.isEmpty()) {
+            if (args.length == 1) {
+                return subCommands.stream()
+                        .filter(sc -> sc.getName().toLowerCase().startsWith(args[0].toLowerCase()) && (sc.getPermission().isEmpty() || sender.hasPermission(sc.getPermission())))
+                        .map(SubCommand::getName)
+                        .collect(Collectors.toList());
+            }
+            if (args.length > 1){
+                SubCommand subCommand = getSubCommand(args[0]);
+                if(subCommand == null) return Collections.emptyList();
+                return subCommand.tabComplete(sender, Arrays.copyOfRange(args, 1, args.length));
+            }
         }
         return tabComplete(sender, args);
     }
