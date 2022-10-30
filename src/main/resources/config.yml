@@ -1,0 +1,9 @@
+lang: en
+debug: true
+clans:
+  cost: 10000
+  initial-balance: 1000
+  data:
+    type: json
+    json:
+      file: "clans"

@@ -1,0 +1,5 @@
+name: ClansPlus
+version: '${project.version}'
+main: it.itzsamirr.clansplus.ClansPlus
+api-version: 1.13
+authors: [ Comodinoh ]

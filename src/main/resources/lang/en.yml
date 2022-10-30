@@ -1,0 +1,4 @@
+prefix: "&7[&c&lClans&4&lPlus&7] &r"
+no-permission: "{prefix}&cYou don't have enough permission to execute this command"
+only-players: "&cOnly players can execute this command!"
+clan-already-exists: "{prefix}&cA clan named '{name}' already exists!"
