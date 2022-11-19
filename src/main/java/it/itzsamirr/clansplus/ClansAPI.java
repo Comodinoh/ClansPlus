@@ -29,8 +29,9 @@ public class ClansAPI {
     private void init(){
         this.managers.add(new LangManager(plugin));
         this.managers.add(new CommandManager(plugin));
-        switch (plugin.getConfig().getString("clans.data.type")){
+        switch (plugin.getConfig().getString("clans.data.type").toLowerCase()){
             case "json":
+                LoggerUtils.debug("JsonClansManager is working").send();
                 this.managers.add(new JsonClanManager(plugin));
                 break;
         }
@@ -47,7 +48,7 @@ public class ClansAPI {
     }
 
     public <T extends Manager> T getManager(Class<T> clazz){
-        return clazz.cast(managers.stream().filter(m -> m.getClass().isAssignableFrom(clazz)).findFirst().orElse(null));
+        return clazz.cast(managers.stream().filter(m -> clazz.isInstance(m) || m.getClass().isAssignableFrom(clazz)).findFirst().orElse(null));
     }
 
     public static ClansAPI getInstance() {

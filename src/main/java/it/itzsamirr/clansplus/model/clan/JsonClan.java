@@ -1,11 +1,10 @@
 package it.itzsamirr.clansplus.model.clan;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class JsonClan implements Clan, Serializable {
+public class JsonClan implements Clan {
     private String name;
     private List<UUID> members;
     private UUID leader;
@@ -89,5 +88,16 @@ public class JsonClan implements Clan, Serializable {
 
     public void setCoLeader(UUID coLeader) {
         this.coLeader = coLeader;
+    }
+
+    @Override
+    public String toString() {
+        return "JsonClan{" +
+                "name='" + name + '\'' +
+                ", members=" + members +
+                ", leader=" + leader +
+                ", coLeader=" + coLeader +
+                ", balance=" + balance +
+                '}';
     }
 }

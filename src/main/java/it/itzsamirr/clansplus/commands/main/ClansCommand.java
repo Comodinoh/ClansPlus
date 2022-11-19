@@ -1,12 +1,12 @@
-package it.itzsamirr.clansplus.commands;
+package it.itzsamirr.clansplus.commands.main;
 
 import it.itzsamirr.clansplus.ClansPlus;
 import it.itzsamirr.clansplus.model.command.Command;
 import it.itzsamirr.clansplus.model.command.CommandInfo;
-import it.itzsamirr.clansplus.model.command.SubCommand;
+import it.itzsamirr.clansplus.utils.Pageinator;
 import org.bukkit.command.CommandSender;
 
-@CommandInfo(name = "clans", aliases = "clan", description = "Main command of ClansPlus", subCommands = {ClansCreateSubCommand.class})
+@CommandInfo(name = "clans", aliases = "clan", description = "Main command of ClansPlus", subCommands = {ClansCreateSubCommand.class, ClansInfoSubCommand.class, ClanHelpSubCommand.class})
 public class ClansCommand extends Command {
     public ClansCommand(ClansPlus plugin) {
         super(plugin);
@@ -14,6 +14,6 @@ public class ClansCommand extends Command {
 
     @Override
     public void execute(CommandSender sender, String[] args) {
-        sender.sendMessage("a");
+        Pageinator.pages("clan-help", 1).forEach(sender::sendMessage);
     }
 }

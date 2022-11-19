@@ -1,23 +1,24 @@
 package it.itzsamirr.clansplus.managers.clan;
 
+import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.stream.JsonReader;
 import it.itzsamirr.clansplus.ClansPlus;
 import it.itzsamirr.clansplus.model.clan.Clan;
 import it.itzsamirr.clansplus.model.clan.JsonClan;
+import it.itzsamirr.clansplus.utils.ArrayUtils;
 import it.itzsamirr.clansplus.utils.LoggerUtils;
 import lombok.SneakyThrows;
 
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.lang.reflect.Array;
+import java.util.*;
 
 public class JsonClanManager implements ClanManager{
-    private List<Clan> clans = new ArrayList<>();
+    private ArrayList<JsonClan> clans = new ArrayList<>();
     private final ClansPlus plugin;
     private File file;
     private Gson gson;
@@ -25,6 +26,8 @@ public class JsonClanManager implements ClanManager{
     public JsonClanManager(ClansPlus plugin) {
         this.plugin = plugin;
         this.gson = new GsonBuilder()
+                .setLenient()
+                .serializeNulls()
                 .setPrettyPrinting()
                 .create();
         this.file = new File(plugin.getDataFolder(),  plugin.getConfig().getString("clans.data.json.file")+ ".json");
@@ -60,18 +63,19 @@ public class JsonClanManager implements ClanManager{
     }
 
     @Override
-    public List<Clan> getClans() {
-        return this.clans;
+    public ArrayList<Clan> getClans() {
+        return new ArrayList<>(clans);
     }
 
     @SneakyThrows
     public synchronized void save(){
-        LoggerUtils.info("Saving clans...").send();
+        LoggerUtils.debug("Saving clans...").send();
         if(!file.exists()) {
             file.createNewFile();
         }
         FileWriter writer = new FileWriter(file, false);
-        writer.write(gson.toJson(clans, List.class));
+        Map<String, ArrayList<JsonClan>> clanMap = new HashMap<String, ArrayList<JsonClan>>(){{put("clans", clans);}};
+        writer.write(gson.toJson(clanMap, new TypeToken<Map<String, ArrayList<JsonClan>>>(){}.getType()));
         writer.flush();
         writer.close();
         LoggerUtils.debug("Saved " + clans.size() + " clans").send();
@@ -85,12 +89,19 @@ public class JsonClanManager implements ClanManager{
             return;
         }
         FileReader reader = new FileReader(file);
-        List<JsonClan> clans = gson.fromJson(reader, List.class);
+        Map<String, ArrayList<JsonClan>> clanMap = gson.fromJson(reader, new TypeToken<Map<String, ArrayList<JsonClan>>>(){}.getType());
+        if(clanMap == null) return;
+        ArrayList<JsonClan> clans = clanMap.getOrDefault("clans", null);
         if(clans == null) return;
-        List<Clan> clans2 = new ArrayList<>(clans);
         this.clans.clear();
-        this.clans.addAll(clans2);
+        this.clans.addAll(clans);
         reader.close();
-        LoggerUtils.debug("Loaded " + this.clans.size() + " clans").send();
+        LoggerUtils.debug("Loaded " + this.clans.size() + " clans")
+                .append(LoggerUtils.Level.DEBUG, this.clans.toString())
+                .send();
+        for (int i = 0; i < this.clans.size(); i++) {
+            LoggerUtils.debug(this.clans.get(i).toString());
+        }
+        LoggerUtils.debug(this.clans.toString());
     }
 }

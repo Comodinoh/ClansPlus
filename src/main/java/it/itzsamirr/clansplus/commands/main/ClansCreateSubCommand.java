@@ -1,4 +1,4 @@
-package it.itzsamirr.clansplus.commands;
+package it.itzsamirr.clansplus.commands.main;
 
 import it.itzsamirr.clansplus.ClansPlus;
 import it.itzsamirr.clansplus.managers.clan.ClanManager;
@@ -17,6 +17,10 @@ public class ClansCreateSubCommand extends SubCommand {
     public boolean run(Player player, String[] args) {
         ClanManager clanManager = api.getManager(ClanManager.class);
         LangManager langManager = api.getManager(LangManager.class);
+        if(args.length < 1){
+            player.sendMessage(langManager.getLanguage().getString("clan-create-usage"));
+            return false;
+        }
         if(clanManager.getClan(args[0]) != null){
             player.sendMessage(langManager.getLanguage().getString("clan-already-exists").replace("{name}", args[0]));
             return false;

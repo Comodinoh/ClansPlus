@@ -14,5 +14,6 @@ public @interface CommandInfo {
     String[] aliases() default {};
     boolean onlyPlayers() default false;
     Class<? extends SubCommand>[] subCommands() default {};
+    String subCommandGeneralPermission() default "";
 
 }

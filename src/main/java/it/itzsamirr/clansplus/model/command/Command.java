@@ -23,6 +23,7 @@ public abstract class Command implements TabExecutor {
     @Getter private boolean onlyPlayers;
     @Getter private String description;
     @Getter private List<String> aliases;
+    @Getter private String subCommandGeneralPermission;
     private List<SubCommand> subCommands = new ArrayList<>();
     protected final ClansPlus plugin;
 
@@ -36,6 +37,7 @@ public abstract class Command implements TabExecutor {
         this.description = info.description();
         this.aliases = Arrays.asList(info.aliases());
         this.onlyPlayers = info.onlyPlayers();
+        this.subCommandGeneralPermission = info.subCommandGeneralPermission();
         for(Class<? extends SubCommand> subCommandClass : info.subCommands()){
             subCommands.add(subCommandClass.getDeclaredConstructor(ClansPlus.class).newInstance(plugin));
         }
@@ -67,7 +69,7 @@ public abstract class Command implements TabExecutor {
             if (args.length > 0 && !subCommands.isEmpty()) {
                 SubCommand subCommand = getSubCommand(args[0]);
                 if(subCommand == null) break a1;
-                if (!subCommand.getPermission().isEmpty() && !sender.hasPermission(subCommand.getPermission())){
+                if (!subCommand.getPermission().isEmpty() && ((!subCommandGeneralPermission.isEmpty() && sender.hasPermission(subCommandGeneralPermission)) || !sender.hasPermission(subCommand.getPermission()))){
                     break a1;
                 }
                 final String[] subArgs = Arrays.copyOfRange(args, 1, args.length);
@@ -113,6 +115,7 @@ public abstract class Command implements TabExecutor {
                 return subCommands.stream()
                         .filter(sc -> sc.getName().toLowerCase().startsWith(args[0].toLowerCase()) && (sc.getPermission().isEmpty() || sender.hasPermission(sc.getPermission())))
                         .map(SubCommand::getName)
+                        .sorted()
                         .collect(Collectors.toList());
             }
             if (args.length > 1){

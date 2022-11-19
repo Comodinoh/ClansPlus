@@ -1,6 +1,6 @@
 package it.itzsamirr.clansplus;
 
-import it.itzsamirr.clansplus.commands.ClansCommand;
+import it.itzsamirr.clansplus.commands.main.ClansCommand;
 import it.itzsamirr.clansplus.managers.command.CommandManager;
 import it.itzsamirr.clansplus.utils.LoggerUtils;
 import org.bukkit.plugin.java.JavaPlugin;
