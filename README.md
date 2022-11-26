@@ -1,2 +1,2 @@
 # ClansPlus
-Plugin for creating clans
+Plugin for creating and managing clans
