@@ -5,6 +5,7 @@ import it.itzsamirr.clansplus.managers.clan.ClanManager;
 import it.itzsamirr.clansplus.managers.clan.JsonClanManager;
 import it.itzsamirr.clansplus.managers.command.CommandManager;
 import it.itzsamirr.clansplus.managers.configuration.lang.LangManager;
+import it.itzsamirr.clansplus.model.configuration.Configuration;
 import it.itzsamirr.clansplus.utils.LoggerUtils;
 
 import java.util.ArrayList;
@@ -48,8 +49,15 @@ public class ClansAPI {
         instance = new ClansAPI();
     }
 
-    public long reload(){
-        return plugin.reload();
+    public static long reload(){
+        LoggerUtils.separators(LoggerUtils.Level.INFO).send();
+        long time = System.currentTimeMillis();
+        instance.getManager(LangManager.class).reload();
+        long dt = (System.currentTimeMillis()-time)+(plugin.reload());
+        LoggerUtils.info("Reloaded in " + dt + " ms (" + dt/1000.0 + "s)")
+                .appendSeparators(LoggerUtils.Level.INFO)
+                .send();
+        return dt;
     }
 
     public <T extends Manager> T getManager(Class<T> clazz){

@@ -46,7 +46,7 @@ clan-help:
   - "{prefix} &c/clan list [page] &8| &7Displays the list of clans"
 clan-help-bottom: "{prefix}&7Type /clan help {number} to get to the next page"
 clan-list-top: "{prefix}&cClan - List:"
-clan-list-format: "{prefix} &c{name}"
+clan-list-format: "{prefix} &c{name} &7| &cLeader: &7{leader}"
 clan-list-bottom: "{prefix}&7Type /clan list {number} to get to the next page"
 no-co-leader: "No one"
 no-member: "No one"

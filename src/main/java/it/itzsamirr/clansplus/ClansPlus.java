@@ -27,16 +27,8 @@ public final class ClansPlus extends JavaPlugin {
     public long reload(){
         long time = System.currentTimeMillis();
         reloadConfig();
-        saveDefaultConfig();
-        LoggerUtils.init(this);
-        LoggerUtils.separators(LoggerUtils.Level.INFO).send();
-        ClansAPI.init(this);
-        ClansAPI.getInstance().getManager(CommandManager.class).register(ClansAdminCommand.class);
-        ClansAPI.getInstance().getManager(CommandManager.class).register(ClansCommand.class);
+        saveConfig();
         long dt = System.currentTimeMillis()-time;
-        LoggerUtils.info("Reloaded in " + dt + " ms (" + dt/1000.0 + "s)")
-                .appendSeparators(LoggerUtils.Level.INFO)
-                .send();
         return dt;
     }
 

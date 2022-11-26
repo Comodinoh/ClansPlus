@@ -35,15 +35,15 @@ public class ClanUtils {
     public String replaceInfos(String s, Clan clan){
         return s.replace("{name}", clan.getName())
                 .replace("{leader}",
-                        Color.color("&" + (Bukkit.getOfflinePlayer(clan.getLeader()).isOnline() ? "a" : "c")) + Bukkit.getOfflinePlayer(clan.getLeader()).getName())
+                        Color.color("&" + (Bukkit.getOfflinePlayer(clan.getLeader()).isOnline() ? "a" : "4")) + Bukkit.getOfflinePlayer(clan.getLeader()).getName())
                 .replace("{coleader}", clan.hasCoLeader() ?
-                        Color.color("&" + (Bukkit.getOfflinePlayer(clan.getCoLeader()).isOnline() ? "a" : "c")) + Bukkit.getOfflinePlayer(clan.getCoLeader()).getName() :
+                        Color.color("&" + (Bukkit.getOfflinePlayer(clan.getCoLeader()).isOnline() ? "a" : "4")) + Bukkit.getOfflinePlayer(clan.getCoLeader()).getName() :
                         langManager
                                 .getLanguage().getString("no-co-leader"))
-                .replace("{members}", clan.getMembers()
+                .replace("{members}", clan.hasMembers() ? clan.getMembers()
                         .stream().map(Bukkit::getOfflinePlayer)
-                        .map(p -> Color.color("&" + (p.isOnline() ? "a" : "c")) + p.getName())
-                        .collect(Collectors.joining(", "))
+                        .map(p -> Color.color("&" + (p.isOnline() ? "a" : "4")) + p.getName())
+                        .collect(Collectors.joining(", ")) : langManager.getLanguage().getString("no-member")
                 )
                 .replace("{balance}", String.valueOf(clan.getBalance()))
                 .replace("{size}", String.valueOf(clan.getMembers().size()+(clan.hasCoLeader() ? 1 : 0)))

@@ -2,6 +2,7 @@ package it.itzsamirr.clansplus.managers.configuration.lang;
 
 import it.itzsamirr.clansplus.ClansPlus;
 import it.itzsamirr.clansplus.managers.Manager;
+import it.itzsamirr.clansplus.model.configuration.Configuration;
 import it.itzsamirr.clansplus.model.configuration.lang.Language;
 import it.itzsamirr.clansplus.utils.LoggerUtils;
 
@@ -56,5 +57,14 @@ public final class LangManager implements Manager {
             load(n);
         }
         load(selectedLocale);
+    }
+
+    public void reload(){
+        loadedLanguages.values().forEach(Language::load);
+        save();
+    }
+
+    public void save(){
+        loadedLanguages.values().forEach(Configuration::save);
     }
 }

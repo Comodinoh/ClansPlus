@@ -35,21 +35,25 @@ public class CommandManager implements Manager {
                 .newInstance(plugin);
         field.setAccessible(true);
         CommandMap map = (CommandMap)field.get(plugin.getServer());
-        map.register(command.getName(), new InternalCommand(command));
+        map.register(command.getName(), "clansplus", new InternalCommand(command));
         field.setAccessible(false);
         commands.put(commandClass, command);
         return command;
     }
 
+    @SneakyThrows
     public void unregister(Class<? extends Command> commandClass){
         if(!commands.containsKey(commandClass)) return;
         Command command = commands.get(commandClass);
-        plugin.getCommand(command.getName()).setExecutor(null);
-        commands.remove(commandClass);
+        field.setAccessible(true);
+        CommandMap map = (CommandMap)field.get(plugin.getServer());
+        map.getCommand(command.getName()).unregister(map);
+        field.setAccessible(false);
     }
 
     public void unregisterAll(){
         commands.keySet().forEach(this::unregister);
+        commands.clear();
     }
 
     @Override
