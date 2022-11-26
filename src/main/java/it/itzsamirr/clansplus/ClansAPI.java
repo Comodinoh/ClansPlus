@@ -33,7 +33,6 @@ public class ClansAPI {
         this.managers.add(new CommandManager(plugin));
         switch (plugin.getConfig().getString("clans.data.type").toLowerCase()){
             case "json":
-                LoggerUtils.debug("JsonClansManager is working").send();
                 this.managers.add(new JsonClanManager(plugin));
                 break;
         }
