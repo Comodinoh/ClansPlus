@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.UUID;
 
-public interface Clan extends Serializable {
+public interface Clan extends Serializable, Comparable<Clan> {
     String getName();
     List<UUID> getMembers();
     UUID getLeader();
@@ -21,4 +21,9 @@ public interface Clan extends Serializable {
     boolean isMember(UUID player);
     boolean isLeader(UUID player);
     boolean isCoLeader(UUID player);
+
+    @Override
+    default int compareTo(Clan o){
+        return getName().compareToIgnoreCase(o.getName());
+    }
 }

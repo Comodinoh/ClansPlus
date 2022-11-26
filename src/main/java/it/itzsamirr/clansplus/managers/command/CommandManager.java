@@ -5,12 +5,23 @@ import it.itzsamirr.clansplus.managers.Manager;
 import it.itzsamirr.clansplus.model.command.Command;
 import it.itzsamirr.clansplus.model.command.InternalCommand;
 import lombok.SneakyThrows;
+import org.bukkit.Bukkit;
 import org.bukkit.command.CommandMap;
 
 import java.lang.reflect.Field;
 import java.util.HashMap;
 
 public class CommandManager implements Manager {
+    private static Field field;
+
+    static {
+        try {
+            field = Bukkit.getServer().getClass().getDeclaredField("commandMap");
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+        }
+    }
+
     private HashMap<Class<? extends Command>, Command> commands = new HashMap<>();
     private final ClansPlus plugin;
 
@@ -22,10 +33,10 @@ public class CommandManager implements Manager {
     public <T extends Command> T register(Class<T> commandClass){
         T command = commandClass.getDeclaredConstructor(ClansPlus.class)
                 .newInstance(plugin);
-        Field field = plugin.getServer().getClass().getDeclaredField("commandMap");
         field.setAccessible(true);
         CommandMap map = (CommandMap)field.get(plugin.getServer());
         map.register(command.getName(), new InternalCommand(command));
+        field.setAccessible(false);
         commands.put(commandClass, command);
         return command;
     }

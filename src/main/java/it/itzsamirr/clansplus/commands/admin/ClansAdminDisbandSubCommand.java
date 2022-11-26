@@ -10,7 +10,7 @@ import org.bukkit.command.ConsoleCommandSender;
 
 public class ClansAdminDisbandSubCommand extends ConfirmationSubCommand {
     public ClansAdminDisbandSubCommand(ClansPlus plugin) {
-        super(plugin, "disband", "clansplus.admin.disband", new String[0]);
+        super(plugin, "disband", "clansplus.admin.disband", false, "delete");
     }
 
     @Override

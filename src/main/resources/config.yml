@@ -2,6 +2,7 @@ lang: en
 debug: true
 clans:
   confirm-limit: 10.0
+  clan-list-max-pages: 7
   member-limit: -1
   cost: 10000
   initial-balance: 1000

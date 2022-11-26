@@ -14,7 +14,7 @@ import java.util.List;
 
 public class ClansAPI {
 
-    private List<Manager> managers = new ArrayList<>();
+    private List<Manager> managers;
     private static ClansPlus plugin;
     private static ClansAPI instance = null;
 
@@ -27,6 +27,7 @@ public class ClansAPI {
     }
 
     private void init(){
+        this.managers = new ArrayList<>();
         this.managers.add(new LangManager(plugin));
         this.managers.add(new CommandManager(plugin));
         switch (plugin.getConfig().getString("clans.data.type").toLowerCase()){
@@ -45,6 +46,10 @@ public class ClansAPI {
         LoggerUtils.info("Initializing API...").send();
         ClansAPI.plugin = plugin;
         instance = new ClansAPI();
+    }
+
+    public long reload(){
+        return plugin.reload();
     }
 
     public <T extends Manager> T getManager(Class<T> clazz){

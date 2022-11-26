@@ -48,7 +48,7 @@ public abstract class Command implements TabExecutor {
     public void execute(Player player, String[] args){}
 
     private SubCommand getSubCommand(String name){
-        return subCommands.stream().filter(sc -> sc.getName().equalsIgnoreCase(name))
+        return subCommands.stream().filter(sc -> sc.getName().equalsIgnoreCase(name) || Arrays.stream(sc.getAliases()).anyMatch(s -> s.equalsIgnoreCase(name)))
                 .findFirst()
                 .orElse(null);
     }

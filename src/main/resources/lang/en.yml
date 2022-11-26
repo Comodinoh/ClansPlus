@@ -1,32 +1,53 @@
-prefix: "&7[&c&lClans&4&lPlus&7] &r"
+# Clan Related Placeholders:
+# » {name} - The clan's name
+# » {leader} - The clan's leader's formatted name
+# » {coleader} - The clan's co-leader's formatted name
+# » {members} - The formatted list of the clan members (leader is excluded)
+# » {balance} - The clan's balance
+# » {size} - The clan's size (leader and co-leaders are excluded)
+# » {size_total} - The clan's size (leader is included)
+#
+#
+#
+prefix: "&7[&c&lClans&4&lPlus&7] &c»&r "
 no-permission: "{prefix}&cYou don't have enough permission to execute this command"
 only-players: "&cOnly players can execute this command!"
 clan-already-exists: "{prefix}&cA clan named '{name}' already exists!"
 clan-not-found: "{prefix}&cCannot find any clan named '{name}'!"
 clan-info-format:
   - "{prefix}&cClan - Info:"
-  - "{prefix} &7- &cName: &7{name}"
-  - "{prefix} &7- &cLeader: &7{leader}"
-  - "{prefix} &7- &cCoLeader: &7{coleader}"
-  - "{prefix} &7- &cMembers: &7{members}"
-  - "{prefix} &7- &cBalance: &7{balance}"
+  - "{prefix} &cName: &7{name}"
+  - "{prefix} &cLeader: &7{leader}"
+  - "{prefix} &cCoLeader: &7{coleader}"
+  - "{prefix} &cMembers: &7{members}"
+  - "{prefix} &cSize: &7{size}"
+  - "{prefix} &cBalance: &7{balance}"
 already-in-a-clan: "{prefix}&cYou are already a part of the clan '{clan}'!"
 confirming-expired: "{prefix}&cYour confirm time has expired!"
 clan-created: "{prefix}&aYou created the clan '{clan}'"
+clan-admin-help-top: "{prefix}&c&lClan Admin - Help"
 clan-admin-help:
-  - "{prefix}&c&lClan Admin - Help"
-  - "{prefix} &7- &c/aclan spy <chat> &8| &7Turns on the ability to see other clans actions"
-  - "{prefix} &7- &c/aclan disband <clan> &8| &7Forcefully disbands a clan"
-  - "{prefix} &7- &c/aclan reload &8| &7Reloads the plugin"
-  - "{prefix} &7- &c/aclan checkmember <player> &8| &7Checks if a player is part of a clan"
-  - "{prefix} &7- &c/aclan edit <clan> <attribute> <value> &8| &7Edits a modifiable attribute of a clan"
-  - "{prefix} &7- &c/aclan kick <player> &8| &7Forcefully kicks a player from his clan"
-  - "{prefix} &7- &c/aclan balance <clan> <add/show/remove> [quantity] &8| &7Manages a clans balance"
+  - "{prefix} &c/aclan spy <chat> &8| &7Turns on the ability to see other clans actions"
+  - "{prefix} &c/aclan disband <clan> &8| &7Forcefully disbands a clan"
+  - "{prefix} &c/aclan reload &8| &7Reloads the plugin"
+  - "{prefix} &c/aclan checkmember <player> &8| &7Checks if a player is part of a clan"
+  - "{prefix} &c/aclan edit <clan> <attribute> <value> &8| &7Edits a modifiable attribute of a clan"
+  - "{prefix} &c/aclan kick <player> &8| &7Forcefully kicks a player from his clan"
+  - "{prefix} &c/aclan balance <clan> <add/show/remove> [quantity] &8| &7Manages a clans balance"
+clan-admin-help-bottom: "{prefix}&7Type /clan help {number} to get to the next page"
+clan-admin-reload: "{prefix}&aPlugin reloaded in {time} ms"
 clan-help-top: "{prefix}&c&lClan - Help"
 clan-help:
-  - "{prefix} &7- &c/clan create <name> &8| &7Creates a clan"
-  - "{prefix} &7- &c/clan info <clan> &8| &7Displays the info about a clan"
+  - "{prefix} &c/clan help [page] &8| &7Displays the available commands"
+  - "{prefix} &c/clan create <name> &8| &7Creates a clan"
+  - "{prefix} &c/clan info <clan> &8| &7Displays the info about a clan"
+  - "{prefix} &c/clan balance <add/show/remove> [quantity] &8| &7Manages the balance of your clan"
+  - "{prefix} &c/clan disband &8| &7Disbands the clan"
+  - "{prefix} &c/clan list [page] &8| &7Displays the list of clans"
 clan-help-bottom: "{prefix}&7Type /clan help {number} to get to the next page"
+clan-list-top: "{prefix}&cClan - List:"
+clan-list-format: "{prefix} &c{name}"
+clan-list-bottom: "{prefix}&7Type /clan list {number} to get to the next page"
 no-co-leader: "No one"
 no-member: "No one"
 clan-info-usage: "{prefix}&cUsage: /clan info <clan> &8| &7Displays the info about a clan"

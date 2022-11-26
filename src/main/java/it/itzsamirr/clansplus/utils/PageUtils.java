@@ -10,7 +10,7 @@ import java.util.Collections;
 import java.util.List;
 
 @UtilityClass
-public class Pageinator {
+public class PageUtils {
 
     private final int PAGE_SIZE = 5;
     private LangManager langManager;
