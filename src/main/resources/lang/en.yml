@@ -23,7 +23,7 @@ clan-info-format:
   - "{prefix} &cSize: &7{size}"
   - "{prefix} &cBalance: &7{balance}"
 already-in-a-clan: "{prefix}&cYou are already a part of the clan '{clan}'!"
-confirming-expired: "{prefix}&cYour confirm time has expired!"
+confirming-expired: "{prefix}&cThe confirmation time has expired! Please execute again this command to confirm!"
 clan-created: "{prefix}&aYou created the clan '{clan}'"
 clan-admin-help-top: "{prefix}&c&lClan Admin - Help"
 clan-admin-help:
@@ -36,6 +36,7 @@ clan-admin-help:
   - "{prefix} &c/aclan balance <clan> <add/show/remove> [quantity] &8| &7Manages a clans balance"
 clan-admin-help-bottom: "{prefix}&7Type /clan help {number} to get to the next page"
 clan-admin-reload: "{prefix}&aPlugin reloaded in {time} ms"
+clan-admin-disband-confirm: "{prefix}&cPlease confirm the deletion of the clan '{clan}' by executing this command again"
 clan-help-top: "{prefix}&c&lClan - Help"
 clan-help:
   - "{prefix} &c/clan help [page] &8| &7Displays the available commands"

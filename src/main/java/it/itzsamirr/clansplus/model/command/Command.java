@@ -3,6 +3,7 @@ package it.itzsamirr.clansplus.model.command;
 
 import it.itzsamirr.clansplus.ClansAPI;
 import it.itzsamirr.clansplus.ClansPlus;
+import it.itzsamirr.clansplus.annotations.command.CommandInfo;
 import it.itzsamirr.clansplus.managers.configuration.lang.LangManager;
 import lombok.Getter;
 import lombok.SneakyThrows;
@@ -112,9 +113,13 @@ public abstract class Command implements TabExecutor {
         }
         if(!subCommands.isEmpty()) {
             if (args.length == 1) {
-                return subCommands.stream()
-                        .filter(sc -> sc.getName().toLowerCase().startsWith(args[0].toLowerCase()) && (sc.getPermission().isEmpty() || sender.hasPermission(sc.getPermission())))
-                        .map(SubCommand::getName)
+                List<String> list = new ArrayList<>();
+                subCommands.stream().filter(cmd -> cmd.getPermission().isEmpty() || sender.hasPermission(cmd.getPermission()) || (!subCommandGeneralPermission.isEmpty() && sender.hasPermission(subCommandGeneralPermission))).forEach(cmd -> {
+                    list.add(cmd.getName());
+                    list.addAll(Arrays.asList(cmd.getAliases()));
+                });
+                return list.stream()
+                        .filter(sc -> sc.toLowerCase().startsWith(args[0].toLowerCase()))
                         .sorted()
                         .collect(Collectors.toList());
             }

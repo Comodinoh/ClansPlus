@@ -14,5 +14,4 @@ public interface ClanManager extends Manager {
     Clan getClan(UUID player);
     ArrayList<Clan> getClans();
     void save();
-    void load();
 }

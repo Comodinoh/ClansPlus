@@ -1,11 +1,18 @@
 package it.itzsamirr.clansplus.model.clan;
 
+import it.itzsamirr.clansplus.annotations.clan.Attribute;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 public class JsonClan implements Clan {
+    @Attribute(name = "name")
     private String name;
+    @Attribute(name = "friendly-fire")
+    private boolean friendlyFire;
+    @Attribute(name = "private")
+    private boolean inviteRequired;
     private List<UUID> members;
     private UUID leader;
     private UUID coLeader;

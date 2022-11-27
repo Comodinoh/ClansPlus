@@ -1,4 +1,6 @@
-package it.itzsamirr.clansplus.model.command;
+package it.itzsamirr.clansplus.annotations.command;
+
+import it.itzsamirr.clansplus.model.command.SubCommand;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
