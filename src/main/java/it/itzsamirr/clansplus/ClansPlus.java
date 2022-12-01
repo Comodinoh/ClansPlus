@@ -4,10 +4,16 @@ import it.itzsamirr.clansplus.commands.admin.ClansAdminCommand;
 import it.itzsamirr.clansplus.commands.admin.ClansAdminHelpSubCommand;
 import it.itzsamirr.clansplus.commands.main.ClansCommand;
 import it.itzsamirr.clansplus.managers.command.CommandManager;
+import it.itzsamirr.clansplus.model.clan.YamlClan;
 import it.itzsamirr.clansplus.utils.LoggerUtils;
+import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class ClansPlus extends JavaPlugin {
+
+    static{
+        ConfigurationSerialization.registerClass(YamlClan.class, "YamlClan");
+    }
 
     @Override
     public void onEnable() {

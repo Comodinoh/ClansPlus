@@ -34,6 +34,7 @@ public class JsonClanManager implements ClanManager{
     }
 
     public void removeClan(Clan clan){
+        if(!(clan instanceof JsonClan)) return;
         clans.remove(clan);
         save();
     }
@@ -47,14 +48,14 @@ public class JsonClanManager implements ClanManager{
 
     @Override
     public Clan getClan(String name) {
-        return clans.stream()
+        return clans.parallelStream()
                 .filter(c -> c.getName().equalsIgnoreCase(name))
                 .findFirst().orElse(null);
     }
 
     @Override
     public Clan getClan(UUID player) {
-        return clans.stream()
+        return clans.parallelStream()
                 .filter(c -> c.isMember(player) ||
                         c.isLeader(player) ||
                         c.isCoLeader(player))
@@ -82,6 +83,26 @@ public class JsonClanManager implements ClanManager{
     }
 
     @SneakyThrows
+    @Override
+    public void reload() {
+        LoggerUtils.info("Reloading clans...").send();
+        if(!file.exists()){
+            file.createNewFile();
+            return;
+        }
+        FileReader reader = new FileReader(file);
+        Map<String, ArrayList<JsonClan>> clanMap = gson.fromJson(reader, new TypeToken<Map<String, ArrayList<JsonClan>>>(){}.getType());
+        if(clanMap == null) return;
+        ArrayList<JsonClan> clans = clanMap.getOrDefault("clans", null);
+        if(clans == null) return;
+        this.clans = new ArrayList<>(clans);
+        reader.close();
+        LoggerUtils.debug("Reloaded " + this.clans.size() + " clans")
+                .append(LoggerUtils.Level.DEBUG, this.clans.toString())
+                .send();
+    }
+
+    @SneakyThrows
     public synchronized void load(){
         LoggerUtils.info("Loading clans...").send();
         if(!file.exists()){
@@ -93,15 +114,11 @@ public class JsonClanManager implements ClanManager{
         if(clanMap == null) return;
         ArrayList<JsonClan> clans = clanMap.getOrDefault("clans", null);
         if(clans == null) return;
-        this.clans.clear();
-        this.clans.addAll(clans);
+        this.clans = new ArrayList<>(clans);
         reader.close();
         LoggerUtils.debug("Loaded " + this.clans.size() + " clans")
                 .append(LoggerUtils.Level.DEBUG, this.clans.toString())
                 .send();
-        for (int i = 0; i < this.clans.size(); i++) {
-            LoggerUtils.debug(this.clans.get(i).toString());
-        }
-        LoggerUtils.debug(this.clans.toString());
+        LoggerUtils.debug(this.clans.toString()).send();
     }
 }

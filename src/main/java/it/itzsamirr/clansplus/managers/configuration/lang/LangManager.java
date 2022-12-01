@@ -60,6 +60,7 @@ public final class LangManager implements Manager {
     }
 
     public void reload(){
+        LoggerUtils.info("Reloading langs...").send();
         loadedLanguages.values().forEach(Language::load);
         save();
     }

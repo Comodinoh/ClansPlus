@@ -2,6 +2,7 @@ package it.itzsamirr.clansplus.managers.clan;
 
 import it.itzsamirr.clansplus.managers.Manager;
 import it.itzsamirr.clansplus.model.clan.Clan;
+import it.itzsamirr.clansplus.utils.LoggerUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,4 +15,5 @@ public interface ClanManager extends Manager {
     Clan getClan(UUID player);
     ArrayList<Clan> getClans();
     void save();
+    void reload();
 }

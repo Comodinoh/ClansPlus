@@ -10,3 +10,5 @@ clans:
     type: "json"
     json:
       file: "clans"
+    yaml:
+      file: "clans"

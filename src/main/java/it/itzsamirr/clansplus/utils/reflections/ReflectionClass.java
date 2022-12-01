@@ -13,6 +13,10 @@ public final class ReflectionClass<T> {
         load();
     }
 
+    public Class<T> getParent() {
+        return clazz;
+    }
+
     public void load(){
         for(Field field : clazz.getDeclaredFields()){
             fields.putIfAbsent(field.getName(), field);
