@@ -14,4 +14,4 @@ Plugin for creating and managing clans
 > * Add clan deaths
 > * Add clan chats
 > * Add staff spy system
-> * ~~Add Yaml serialization clan system~~
+> * ~~Add Yaml clan serialization system~~
