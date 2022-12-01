@@ -10,7 +10,8 @@ Plugin for creating and managing clans
 > * Add /clan balance
 > * Add friendly fire
 > * Add private clans
-> * Add kills
-> * Add deaths
+> * Add clan kills
+> * Add clan deaths
 > * Add clan chats
 > * Add staff spy system
+> * Add Yaml serialization clan system
