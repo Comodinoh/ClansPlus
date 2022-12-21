@@ -18,3 +18,4 @@ Plugin for creating and managing clans
 > * Add SQLite clan serialization system
 > * Add MySQL clan serialization system
 > * ~~Add Json clan serialization system~~
+> * Add clan events
