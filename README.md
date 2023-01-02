@@ -5,7 +5,7 @@ Plugin for creating and managing clans
 ## TODO and GOALS
 
 
-> * Add /clan invite
+> * Implement invites
 > * Add /clan kick
 > * Add /clan balance
 > * Add friendly fire
