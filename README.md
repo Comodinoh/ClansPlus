@@ -5,7 +5,7 @@ Plugin for creating and managing clans
 ## TODO and GOALS
 
 
-> * Add /clan invite
+> * Implement invites
 > * Add /clan kick
 > * Add /clan balance
 > * Add friendly fire
@@ -14,4 +14,9 @@ Plugin for creating and managing clans
 > * Add clan deaths
 > * Add clan chats
 > * Add staff spy system
-> * Add Yaml serialization clan system
+> * ~~Add Yaml clan serialization system~~
+> * Add SQLite clan serialization system
+> * Add MySQL clan serialization system
+> * ~~Add Json clan serialization system~~
+> * Add clan events
+> * Adjust SubCommand API
