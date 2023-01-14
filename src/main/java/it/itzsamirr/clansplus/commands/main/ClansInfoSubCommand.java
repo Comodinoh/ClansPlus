@@ -1,6 +1,7 @@
 package it.itzsamirr.clansplus.commands.main;
 
 import it.itzsamirr.clansplus.ClansPlus;
+import it.itzsamirr.clansplus.annotations.command.SubCommandInfo;
 import it.itzsamirr.clansplus.managers.clan.ClanManager;
 import it.itzsamirr.clansplus.managers.configuration.lang.LangManager;
 import it.itzsamirr.clansplus.model.clan.Clan;
@@ -12,15 +13,16 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@SubCommandInfo(name = "info", aliases = "i")
 public class ClansInfoSubCommand extends SubCommand {
     public ClansInfoSubCommand(ClansPlus plugin) {
-        super(plugin, "info");
+        super(plugin);
     }
 
     @Override
     public boolean run(CommandSender sender, String[] args) {
-        LangManager langManager = api.getManager(LangManager.class);
-        ClanManager clanManager = api.getManager(ClanManager.class);
+        LangManager langManager = api.get(LangManager.class);
+        ClanManager clanManager = api.get(ClanManager.class);
         if(args.length < 1){
             sender.sendMessage(langManager.getLanguage().getString("clan-info-usage"));
             return false; 
@@ -38,7 +40,7 @@ public class ClansInfoSubCommand extends SubCommand {
     @Override
     public List<String> tabComplete(CommandSender sender, String[] args) {
         if(args.length != 1) return Collections.emptyList();
-        return api.getManager(ClanManager.class).getClans()
+        return api.get(ClanManager.class).getClans()
                 .stream()
                 .map(Clan::getName)
                 .sorted()

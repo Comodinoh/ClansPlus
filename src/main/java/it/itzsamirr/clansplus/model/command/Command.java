@@ -59,7 +59,7 @@ public abstract class Command implements TabExecutor {
         if(!permission.isEmpty()){
             if(!sender.hasPermission(permission)){
                 sender.sendMessage(
-                        ClansAPI.getInstance().getManager(LangManager.class)
+                        ClansAPI.getInstance().get(LangManager.class)
                                 .getLanguage().getString("no-permission")
                 );
                 return false;
@@ -76,7 +76,7 @@ public abstract class Command implements TabExecutor {
                 final String[] subArgs = Arrays.copyOfRange(args, 1, args.length);
                 if(subCommand.isOnlyPlayers()){
                     if(!(sender instanceof Player)){
-                        sender.sendMessage(ClansAPI.getInstance().getManager(LangManager.class)
+                        sender.sendMessage(ClansAPI.getInstance().get(LangManager.class)
                                 .getLanguage().getString("only-players"));
                         return false;
                     }
@@ -89,7 +89,7 @@ public abstract class Command implements TabExecutor {
         }
         if(onlyPlayers){
             if(!(sender instanceof Player)){
-                sender.sendMessage(ClansAPI.getInstance().getManager(LangManager.class)
+                sender.sendMessage(ClansAPI.getInstance().get(LangManager.class)
                         .getLanguage().getString("only-players"));
                 return false;
             }

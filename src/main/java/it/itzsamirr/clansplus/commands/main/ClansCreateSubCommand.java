@@ -1,22 +1,23 @@
 package it.itzsamirr.clansplus.commands.main;
 
 import it.itzsamirr.clansplus.ClansPlus;
+import it.itzsamirr.clansplus.annotations.command.SubCommandInfo;
 import it.itzsamirr.clansplus.managers.clan.ClanManager;
 import it.itzsamirr.clansplus.managers.configuration.lang.LangManager;
 import it.itzsamirr.clansplus.model.clan.Clan;
 import it.itzsamirr.clansplus.model.command.SubCommand;
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+@SubCommandInfo(name = "create", onlyPlayers = true)
 public class ClansCreateSubCommand extends SubCommand {
     public ClansCreateSubCommand(ClansPlus plugin) {
-        super(plugin, "create", "", true);
+        super(plugin);
     }
 
     @Override
     public boolean run(Player player, String[] args) {
-        ClanManager clanManager = api.getManager(ClanManager.class);
-        LangManager langManager = api.getManager(LangManager.class);
+        ClanManager clanManager = api.get(ClanManager.class);
+        LangManager langManager = api.get(LangManager.class);
         if(args.length < 1){
             player.sendMessage(langManager.getLanguage().getString("clan-create-usage"));
             return false;

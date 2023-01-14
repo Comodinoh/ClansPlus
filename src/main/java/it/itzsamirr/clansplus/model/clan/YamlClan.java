@@ -4,6 +4,9 @@ import it.itzsamirr.clansplus.ClansAPI;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.configuration.serialization.SerializableAs;
 
+import java.text.DateFormat;
+import java.time.Instant;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -12,6 +15,7 @@ public class YamlClan implements Clan, ConfigurationSerializable {
     private final ClansAPI api;
     private String name;
     private UUID leader;
+    private Date creationDate;
     private List<UUID> members = new ArrayList<>();
     private UUID coLeader = null;
     private double balance;
@@ -25,6 +29,7 @@ public class YamlClan implements Clan, ConfigurationSerializable {
         this.coLeader = sCoLeader != null ? UUID.fromString(sCoLeader) : null;
         this.members = ((List<String>)map.get("members")).stream().map(UUID::fromString).collect(Collectors.toList());
         this.balance = (Double) map.get("balance");
+        this.creationDate = Date.from(Instant.parse((String)map.get("creation-date")));
     }
 
     public YamlClan(String name, UUID leader){
@@ -32,6 +37,7 @@ public class YamlClan implements Clan, ConfigurationSerializable {
         this.name = name;
         this.leader = leader;
         this.balance = api.getConfig().getDouble("clans.initial-balance");
+        this.creationDate = Date.from(Instant.now());
     }
 
     @Override
@@ -55,8 +61,18 @@ public class YamlClan implements Clan, ConfigurationSerializable {
     }
 
     @Override
+    public Date getCreationDate() {
+        return this.creationDate;
+    }
+
+    @Override
     public double getBalance() {
         return this.balance;
+    }
+
+    @Override
+    public void setCreationDate(Date date) {
+        this.creationDate = date;
     }
 
     @Override
@@ -122,6 +138,7 @@ public class YamlClan implements Clan, ConfigurationSerializable {
         map.put("co-leader", hasCoLeader() ? coLeader.toString() : null);
         map.put("members", hasMembers() ? members.stream().map(UUID::toString).collect(Collectors.toList()) : new ArrayList<String>());
         map.put("balance", balance);
+        map.put("creation-date", DateTimeFormatter.ISO_DATE_TIME.format(creationDate.toInstant()));
         return map;
     }
 }

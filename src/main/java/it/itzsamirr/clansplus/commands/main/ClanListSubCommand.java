@@ -1,6 +1,7 @@
 package it.itzsamirr.clansplus.commands.main;
 
 import it.itzsamirr.clansplus.ClansPlus;
+import it.itzsamirr.clansplus.annotations.command.SubCommandInfo;
 import it.itzsamirr.clansplus.managers.configuration.lang.LangManager;
 import it.itzsamirr.clansplus.model.command.SubCommand;
 import it.itzsamirr.clansplus.utils.ClanUtils;
@@ -9,9 +10,10 @@ import org.bukkit.command.CommandSender;
 
 import java.util.Arrays;
 
+@SubCommandInfo(name = "list", aliases = "l")
 public class ClanListSubCommand extends SubCommand {
     public ClanListSubCommand(ClansPlus plugin) {
-        super(plugin, "list", new String[]{"l"});
+        super(plugin);
     }
 
     @Override

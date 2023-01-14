@@ -1,23 +1,24 @@
 package it.itzsamirr.clansplus;
 
 import it.itzsamirr.clansplus.managers.Manager;
-import it.itzsamirr.clansplus.managers.clan.ClanManager;
 import it.itzsamirr.clansplus.managers.clan.JsonClanManager;
 import it.itzsamirr.clansplus.managers.clan.YamlClanManager;
 import it.itzsamirr.clansplus.managers.command.CommandManager;
 import it.itzsamirr.clansplus.managers.configuration.lang.LangManager;
-import it.itzsamirr.clansplus.model.configuration.Configuration;
+import it.itzsamirr.clansplus.managers.notify.NotificationManager;
+import it.itzsamirr.clansplus.model.generic.Loadable;
+import it.itzsamirr.clansplus.model.generic.Reloadable;
+import it.itzsamirr.clansplus.tasks.NotificationTask;
 import it.itzsamirr.clansplus.utils.LoggerUtils;
 import org.bukkit.configuration.file.FileConfiguration;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 
 public class ClansAPI {
+    private List<Reloadable> reloadables;
+    private List<Loadable> loadables;
 
-    private List<Manager> managers;
     private static ClansPlus plugin;
     private static ClansAPI instance = null;
 
@@ -30,20 +31,31 @@ public class ClansAPI {
     }
 
     private void init(){
-        this.managers = new ArrayList<>();
-        this.managers.add(new LangManager(plugin));
-        this.managers.add(new CommandManager(plugin));
+        this.reloadables = new ArrayList<>();
+        this.loadables = new ArrayList<>();
+        add(new LangManager(plugin));
+        add(new CommandManager(plugin));
         switch (plugin.getConfig().getString("clans.data.type").toLowerCase()){
             case "json":
-                this.managers.add(new JsonClanManager(plugin));
+                add((Reloadable) new JsonClanManager(plugin));
                 break;
             case "yaml":
-                this.managers.add(new YamlClanManager(plugin));
+                add((Reloadable)new YamlClanManager(plugin));
         }
+        add((Reloadable)new NotificationManager(plugin));
+        add((Reloadable) NotificationTask.start(plugin, this));
+    }
+    private void add(Reloadable reloadable){
+        if(reloadable instanceof Loadable) add((Loadable) reloadable);
+        this.reloadables.add(reloadable);
+    }
+
+    private void add(Loadable loadable){
+        loadables.add(loadable);
     }
 
     private void load(){
-        managers.forEach(Manager::load);
+        loadables.forEach(Loadable::load);
     }
 
     protected static void init(ClansPlus plugin){
@@ -52,12 +64,11 @@ public class ClansAPI {
         instance = new ClansAPI();
     }
 
-    public static long reload(){
+    public long reload(){
         LoggerUtils.separators(LoggerUtils.Level.INFO)
                 .append(LoggerUtils.Level.INFO, "Reloading...").send();
         long time = System.currentTimeMillis();
-        instance.getManager(LangManager.class).reload();
-        instance.getManager(ClanManager.class).reload();
+        reloadables.forEach(Reloadable::reload);
         long dt = (System.currentTimeMillis()-time)+(plugin.reload());
         LoggerUtils.info("Reloaded in " + dt + " ms (" + dt/1000.0 + "s)")
                 .appendSeparators(LoggerUtils.Level.INFO)
@@ -65,8 +76,8 @@ public class ClansAPI {
         return dt;
     }
 
-    public <T extends Manager> T getManager(Class<T> clazz){
-        return clazz.cast(managers.stream().filter(m -> clazz.isInstance(m) || m.getClass().isAssignableFrom(clazz)).findFirst().orElse(null));
+    public <T extends Loadable> T get(Class<T> clazz){
+        return clazz.cast(loadables.stream().filter(m -> clazz.isInstance(m) || m.getClass().isAssignableFrom(clazz)).findFirst().orElse(null));
     }
 
     public FileConfiguration getConfig(){

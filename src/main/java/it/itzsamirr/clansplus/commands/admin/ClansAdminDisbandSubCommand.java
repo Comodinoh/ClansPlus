@@ -1,25 +1,26 @@
 package it.itzsamirr.clansplus.commands.admin;
 
 import it.itzsamirr.clansplus.ClansPlus;
+import it.itzsamirr.clansplus.annotations.command.SubCommandInfo;
 import it.itzsamirr.clansplus.managers.clan.ClanManager;
 import it.itzsamirr.clansplus.managers.configuration.lang.LangManager;
 import it.itzsamirr.clansplus.model.clan.Clan;
 import it.itzsamirr.clansplus.model.command.ConfirmationSubCommand;
 import org.bukkit.command.CommandSender;
-import org.bukkit.command.ConsoleCommandSender;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@SubCommandInfo(name = "disband", aliases = "delete", permission = "clansplus.admin.disband")
 public class ClansAdminDisbandSubCommand extends ConfirmationSubCommand {
     public ClansAdminDisbandSubCommand(ClansPlus plugin) {
-        super(plugin, "disband", "clansplus.admin.disband", false, "delete");
+        super(plugin);
     }
 
     @Override
     public boolean run(CommandSender sender, String[] args) {
-        LangManager langManager = api.getManager(LangManager.class);
-        ClanManager clanManager = api.getManager(ClanManager.class);
+        LangManager langManager = api.get(LangManager.class);
+        ClanManager clanManager = api.get(ClanManager.class);
         if(args.length < 1){
             sender.sendMessage(langManager.getLanguage().getString("clan-admin-disband-usage"));
             return false;
@@ -47,7 +48,7 @@ public class ClansAdminDisbandSubCommand extends ConfirmationSubCommand {
 
     @Override
     public List<String> tabComplete(CommandSender sender, String[] args) {
-        return api.getManager(ClanManager.class).getClans()
+        return api.get(ClanManager.class).getClans()
                 .stream().sorted().map(Clan::getName)
                 .filter(s -> s.toLowerCase().startsWith(args[0].toLowerCase()))
                 .collect(Collectors.toList());

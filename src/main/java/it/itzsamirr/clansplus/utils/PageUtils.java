@@ -16,7 +16,7 @@ public class PageUtils {
     private LangManager langManager;
 
     static{
-        langManager = ClansAPI.getInstance().getManager(LangManager.class);
+        langManager = ClansAPI.getInstance().get(LangManager.class);
     }
 
     public static List<String> pages(List<String> inputList, int selectedPage, int pageSize, String bottomLine, String topLine){

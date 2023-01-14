@@ -1,14 +1,18 @@
 package it.itzsamirr.clansplus.commands.main;
 
 import it.itzsamirr.clansplus.ClansPlus;
+import it.itzsamirr.clansplus.annotations.command.SubCommandInfo;
 import it.itzsamirr.clansplus.model.command.SubCommand;
 import it.itzsamirr.clansplus.utils.NumberUtils;
 import it.itzsamirr.clansplus.utils.PageUtils;
 import org.bukkit.command.CommandSender;
 
+
+@SubCommandInfo(name = "help", aliases = "h")
 public class ClanHelpSubCommand extends SubCommand {
+
     public ClanHelpSubCommand(ClansPlus plugin) {
-        super(plugin, "help");
+        super(plugin);
     }
 
     @Override

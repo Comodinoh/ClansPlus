@@ -7,15 +7,10 @@ import it.itzsamirr.clansplus.managers.configuration.lang.LangManager;
 import it.itzsamirr.clansplus.model.clan.Clan;
 import it.itzsamirr.clansplus.utils.reflections.ReflectionClass;
 import it.itzsamirr.clansplus.utils.reflections.ReflectionUtils;
-import lombok.SneakyThrows;
 import lombok.experimental.UtilityClass;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.OfflinePlayer;
 
 import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -25,8 +20,8 @@ public class ClanUtils {
     private LangManager langManager;
 
     static{
-        clanManager = ClansAPI.getInstance().getManager(ClanManager.class);
-        langManager = ClansAPI.getInstance().getManager(LangManager.class);
+        clanManager = ClansAPI.getInstance().get(ClanManager.class);
+        langManager = ClansAPI.getInstance().get(LangManager.class);
     }
 
     public List<String> getInfo(Clan clan){

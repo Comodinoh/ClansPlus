@@ -5,6 +5,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.stream.JsonReader;
 import it.itzsamirr.clansplus.ClansPlus;
+import it.itzsamirr.clansplus.events.ClanDeleteEvent;
 import it.itzsamirr.clansplus.model.clan.Clan;
 import it.itzsamirr.clansplus.model.clan.JsonClan;
 import it.itzsamirr.clansplus.utils.ArrayUtils;
@@ -33,10 +34,14 @@ public class JsonClanManager implements ClanManager{
         this.file = new File(plugin.getDataFolder(),  plugin.getConfig().getString("clans.data.json.file")+ ".json");
     }
 
-    public void removeClan(Clan clan){
-        if(!(clan instanceof JsonClan)) return;
+    public boolean removeClan(String who, Clan clan){
+        if(!(clan instanceof JsonClan)) return false;
+        ClanDeleteEvent event = new ClanDeleteEvent(who, clan);
+        plugin.getServer().getPluginManager().callEvent(event);
+        if(event.isCancelled()) return false;
         clans.remove(clan);
         save();
+        return true;
     }
 
     public JsonClan addClan(String name, UUID leader){

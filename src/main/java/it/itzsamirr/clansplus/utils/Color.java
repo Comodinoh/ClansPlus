@@ -16,7 +16,7 @@ public class Color {
 
     public String colorP(String s){
         return ChatColor.translateAlternateColorCodes('&', s.replace("{prefix}",
-                ClansAPI.getInstance().getManager(LangManager.class)
+                ClansAPI.getInstance().get(LangManager.class)
                         .getLanguage().getConfig().getString("prefix")));
     }
 

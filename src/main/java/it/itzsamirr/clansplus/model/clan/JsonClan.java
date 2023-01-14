@@ -2,7 +2,9 @@ package it.itzsamirr.clansplus.model.clan;
 
 import it.itzsamirr.clansplus.annotations.clan.Attribute;
 
+import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -13,21 +15,33 @@ public class JsonClan implements Clan {
     private boolean friendlyFire;
     @Attribute(name = "private")
     private boolean inviteRequired;
+    private Date creationDate;
     private List<UUID> members;
     private UUID leader;
     private UUID coLeader;
     private double balance;
 
     public JsonClan(String name, UUID leader, double initialBalance){
-        this(name, new ArrayList<>(), leader, null, initialBalance);
+        this(name, new ArrayList<>(), leader, null, initialBalance, Date.from(Instant.now()));
     }
 
-    public JsonClan(String name, List<UUID> members, UUID leader, UUID coLeader, double balance) {
+    public JsonClan(String name, List<UUID> members, UUID leader, UUID coLeader, double balance, Date creationDate) {
         this.name = name;
         this.members = members;
         this.leader = leader;
         this.coLeader = coLeader;
         this.balance = balance;
+        this.creationDate = creationDate;
+    }
+
+    @Override
+    public Date getCreationDate() {
+        return creationDate;
+    }
+
+    @Override
+    public void setCreationDate(Date creationDate) {
+        this.creationDate = creationDate;
     }
 
     public boolean hasLeader(){

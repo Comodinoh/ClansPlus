@@ -12,3 +12,9 @@ clans:
       file: "clans"
     yaml:
       file: "clans"
+notifications:
+  # in minutes
+  # -1 to disable
+  # Default: 1 week = 10080 minutes
+  keep-for: 10080
+  file: "notifications"

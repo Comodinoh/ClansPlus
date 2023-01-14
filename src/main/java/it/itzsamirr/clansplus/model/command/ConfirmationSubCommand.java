@@ -8,16 +8,9 @@ import java.util.*;
 
 public abstract class ConfirmationSubCommand extends SubCommand{
     protected Map<CommandSender, Long> confirming = new HashMap<>();
-    public ConfirmationSubCommand(ClansPlus plugin, String name, String permission, boolean onlyPlayers, String... aliases) {
-        super(plugin, name, permission, onlyPlayers, aliases);
-    }
 
-    public ConfirmationSubCommand(ClansPlus plugin, String name, String permission, String... aliases) {
-        super(plugin, name, permission, aliases);
-    }
-
-    public ConfirmationSubCommand(ClansPlus plugin, String name, String... aliases) {
-        super(plugin, name, aliases);
+    public ConfirmationSubCommand(ClansPlus plugin) {
+        super(plugin);
     }
 
     protected boolean isConfirming(CommandSender sender){

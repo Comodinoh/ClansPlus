@@ -1,5 +1,6 @@
 package it.itzsamirr.clansplus.managers;
 
-public interface Manager {
-    void load();
+import it.itzsamirr.clansplus.model.generic.Loadable;
+
+public interface Manager extends Loadable {
 }
