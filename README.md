@@ -19,4 +19,5 @@ Plugin for creating and managing clans
 > * Add MySQL clan serialization system
 > * ~~Add Json clan serialization system~~
 > * Add clan events
-> * Adjust SubCommand API
+> * ~~Add notifications~~
+> * ~~Adjust SubCommand API~~
