@@ -40,7 +40,7 @@ public abstract class Command implements TabExecutor {
         this.onlyPlayers = info.onlyPlayers();
         this.subCommandGeneralPermission = info.subCommandGeneralPermission();
         for(Class<? extends SubCommand> subCommandClass : info.subCommands()){
-            subCommands.add(subCommandClass.getDeclaredConstructor(ClansPlus.class).newInstance(plugin));
+            subCommands.add(subCommandClass.getDeclaredConstructor(ClansPlus.class, Command.class).newInstance(plugin, this));
         }
     }
 
@@ -65,13 +65,13 @@ public abstract class Command implements TabExecutor {
                 return false;
             }
         }
-        a1:
+        argsCheck:
         {
             if (args.length > 0 && !subCommands.isEmpty()) {
                 SubCommand subCommand = getSubCommand(args[0]);
-                if(subCommand == null) break a1;
+                if(subCommand == null) break argsCheck;
                 if (!subCommand.getPermission().isEmpty() && ((!subCommandGeneralPermission.isEmpty() && sender.hasPermission(subCommandGeneralPermission)) || !sender.hasPermission(subCommand.getPermission()))){
-                    break a1;
+                    break argsCheck;
                 }
                 final String[] subArgs = Arrays.copyOfRange(args, 1, args.length);
                 if(subCommand.isOnlyPlayers()){
@@ -80,10 +80,10 @@ public abstract class Command implements TabExecutor {
                                 .getLanguage().getString("only-players"));
                         return false;
                     }
-                    if(subCommand.run((Player)sender, subArgs)) break a1;
+                    if(subCommand.run((Player)sender, subArgs)) break argsCheck;
                     return false;
                 }
-                if(subCommand.run(sender, subArgs)) break a1;
+                if(subCommand.run(sender, subArgs)) break argsCheck;
                 return false;
             }
         }
@@ -101,7 +101,7 @@ public abstract class Command implements TabExecutor {
     }
 
     public List<String> tabComplete(CommandSender sender, String[] args){
-        return null;
+        return Collections.emptyList();
     }
 
     @Override
@@ -126,7 +126,7 @@ public abstract class Command implements TabExecutor {
             if (args.length > 1){
                 SubCommand subCommand = getSubCommand(args[0]);
                 if(subCommand == null) return Collections.emptyList();
-                return subCommand.tabComplete(sender, Arrays.copyOfRange(args, 1, args.length));
+                return subCommand.runTab(sender, Arrays.copyOfRange(args, 1, args.length));
             }
         }
         return tabComplete(sender, args);

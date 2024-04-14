@@ -1,6 +1,5 @@
 package it.itzsamirr.clansplus;
 
-import it.itzsamirr.clansplus.managers.Manager;
 import it.itzsamirr.clansplus.managers.clan.JsonClanManager;
 import it.itzsamirr.clansplus.managers.clan.YamlClanManager;
 import it.itzsamirr.clansplus.managers.command.CommandManager;
