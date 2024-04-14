@@ -3,21 +3,20 @@ Plugin for creating and managing clans
 
 
 ## TODO and GOALS
-
-
-> * Implement invites
-> * Add /clan kick
-> * Add /clan balance
-> * Add friendly fire
-> * Add private clans
-> * Add clan kills
-> * Add clan deaths
-> * Add clan chats
-> * Add staff spy system
-> * ~~Add Yaml clan serialization system~~
-> * Add SQLite clan serialization system
-> * Add MySQL clan serialization system
-> * ~~Add Json clan serialization system~~
-> * Add clan events
-> * ~~Add notifications~~
-> * ~~Adjust SubCommand API~~
+> * ~~SubCommand API~~
+> * Clan serialization
+>  * ~~Yaml clan serialization~~
+>  * ~~Json clan serialization~~
+>  * SQLite clan serialization
+>  * MySQL clan serialization
+> * Clan events
+> * Notifications
+> * Clan commands
+>  * User commands
+>  * Admin commands
+> * Code cleanup
+> * Invites
+> * PvP
+>  * Friendly fire
+>  * Clan wars
+> * Revise english locale
